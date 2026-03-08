@@ -1,0 +1,10 @@
+{
+    "name": "example-tsc-codebase",
+    "type": "module",
+    "dependencies": {
+        "@reduxjs/toolkit": "^2.11.2",
+        "json5": "^2.2.3",
+        "rtk-to-endpoints": "file:..",
+        "typescript": "^5.9.3"
+    }
+}
