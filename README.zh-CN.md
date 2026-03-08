@@ -20,7 +20,7 @@ npm install --save-dev rtk-to-endpoints
 
 ## 配置
 
-在 `tsconfig.json` 中添加插件配置：
+### 1. 在 `tsconfig.json` 中添加插件
 
 ```json
 {
@@ -33,6 +33,22 @@ npm install --save-dev rtk-to-endpoints
   }
 }
 ```
+
+### 2. 切换 VSCode 使用工作区 TypeScript
+
+此插件需要 VSCode 使用工作区的 TypeScript 版本而非内置版本。
+
+**操作步骤：**
+
+1. 打开命令面板：
+   - **Windows/Linux**: `Ctrl+Shift+P`
+   - **macOS**: `Cmd+Shift+P`
+
+2. 执行指令：**TypeScript: 选择 TypeScript 版本...** (或 "TypeScript: Select TypeScript Version")
+
+3. 选择**使用工作区版本** (或 "Use Workspace Version")
+
+4. **重新加载 VSCode 窗口**（`Ctrl+Shift+P` / `Cmd+Shift+P` → **开发人员: 重新加载窗口** / "Developer: Reload Window"）使配置生效。
 
 ## 使用
 

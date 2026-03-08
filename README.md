@@ -20,7 +20,7 @@ npm install --save-dev rtk-to-endpoints
 
 ## Configuration
 
-Add the plugin to your `tsconfig.json`:
+### 1. Add plugin to `tsconfig.json`
 
 ```json
 {
@@ -33,6 +33,22 @@ Add the plugin to your `tsconfig.json`:
   }
 }
 ```
+
+### 2. Switch VSCode to use workspace TypeScript
+
+This plugin requires VSCode to use your workspace's TypeScript version instead of the built-in one.
+
+**Steps:**
+
+1. Open Command Palette:
+   - **Windows/Linux**: `Ctrl+Shift+P`
+   - **macOS**: `Cmd+Shift+P`
+
+2. Run command: **TypeScript: Select TypeScript Version** (or "TypeScript: 选择 TypeScript 版本...")
+
+3. Select **Use Workspace Version** (or "使用工作区版本")
+
+4. **Reload the VSCode window** (`Ctrl+Shift+P` / `Cmd+Shift+P` → **Developer: Reload Window** / "开发人员: 重新加载窗口") for the changes to take effect.
 
 ## Usage
 
