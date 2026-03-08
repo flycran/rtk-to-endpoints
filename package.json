@@ -1,6 +1,6 @@
 {
     "name": "rtk-to-endpoints",
-    "version": "0.2.2",
+    "version": "0.2.1",
     "description": "A TypeScript Language Service Plugin that enhances IDE experience for RTK Query by enabling 'Go to Definition' from hooks to endpoint definitions.",
     "license": "MIT",
     "author": "",
@@ -27,14 +27,19 @@
     "scripts": {
         "dev": "bun build ./src/index.ts --outdir ./out --target node --format cjs --sourcemap --watch",
         "build": "bun build ./src/index.ts --outdir ./out --target node --format cjs --sourcemap",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "test": "vitest run",
+        "test:watch": "vitest"
     },
     "dependencies": {
+        "json5": "^2.2.3",
         "typescript": "^5.9.3"
     },
     "devDependencies": {
+        "@reduxjs/toolkit": "^2.11.2",
         "@types/node": "^25.3.5",
-        "tsx": "^4.21.0"
+        "tsx": "^4.21.0",
+        "vitest": "^4.0.18"
     },
     "peerDependencies": {
         "typescript": ">=4.0.0"

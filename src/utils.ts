@@ -6,13 +6,11 @@ import type tslib from "typescript/lib/tsserverlibrary";
 const HOOK_PREFIXES = ["useLazy", "use"] as const;
 
 const HOOK_SUFFIXES = [
-  "QuerySubscription",
-  "QueryState",
-  "Query",
-  "Mutation",
-  "InfiniteQuerySubscription",
   "InfiniteQueryState",
   "InfiniteQuery",
+  "QueryState",
+  "Mutation",
+  "Query",
 ] as const;
 
 /**
@@ -31,6 +29,7 @@ export function extractEndpointName(hookName: string) {
           }
         }
       }
+      return
     }
   }
 }
