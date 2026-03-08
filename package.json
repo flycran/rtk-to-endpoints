@@ -1,6 +1,6 @@
 {
     "name": "rtk-to-endpoints",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "A TypeScript Language Service Plugin that enhances IDE experience for RTK Query by enabling 'Go to Definition' from hooks to endpoint definitions.",
     "license": "MIT",
     "author": "",
