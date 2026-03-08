@@ -3,8 +3,6 @@ name: Test
 on:
   push:
     branches: [main, master]
-    tags:
-      - 'v*'
   pull_request:
     branches: [main, master]
   workflow_call:
