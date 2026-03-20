@@ -4,6 +4,10 @@ English | [简体中文](./README.zh-CN.md)
 
 A TypeScript Language Service Plugin that enhances IDE experience for RTK Query by enabling "Go to Definition" from hooks directly to endpoint definitions.
 
+<p align="center">
+  <img src="./view.gif" alt="view" width="360">
+</p>
+
 ## Problem
 
 When using RTK Query, hook names (e.g., `useGetUserQuery`) are dynamically derived from endpoint names (e.g., `getUser`). TypeScript's "Go to Definition" can only point to type gymnastics, not directly to the endpoint definition in `createApi`.
