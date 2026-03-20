@@ -5,7 +5,7 @@
 一个 TypeScript 语言服务插件，通过实现从 RTK Query hook 到 endpoint 定义的"跳转到定义"功能，增强 IDE 开发体验。
 
 <p align="center">
-  <img src="./view.gif" alt="view" width="360">
+  <img src="./view.gif" alt="view">
 </p>
 
 ## 问题

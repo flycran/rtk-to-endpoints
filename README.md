@@ -5,7 +5,7 @@ English | [简体中文](./README.zh-CN.md)
 A TypeScript Language Service Plugin that enhances IDE experience for RTK Query by enabling "Go to Definition" from hooks directly to endpoint definitions.
 
 <p align="center">
-  <img src="./view.gif" alt="view" width="360">
+  <img src="./view.gif" alt="view">
 </p>
 
 ## Problem
