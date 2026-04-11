@@ -257,8 +257,9 @@ export function getEndpointInfo(
 			if (!urlNode) return;
 			if (!ts.isPropertyAssignment(urlNode)) return;
 			const nodeValue = urlNode.initializer;
-			if (!ts.isStringLiteral(nodeValue)) return;
-			return nodeValue.text;
+			if (ts.isStringLiteral(nodeValue)) return nodeValue.text;
+			if(ts.isNoSubstitutionTemplateLiteral(nodeValue)) return nodeValue.text;
+			return nodeValue.getText();
 		};
 		const getMethod = () => {
 			if (!methodSymbol) return;
