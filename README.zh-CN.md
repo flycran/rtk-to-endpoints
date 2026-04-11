@@ -2,11 +2,20 @@
 
 [English](./README.md) | 简体中文
 
-一个 TypeScript 语言服务插件，通过实现从 RTK Query hook 到 endpoint 定义的"跳转到定义"功能，增强 IDE 开发体验。
+一个 TypeScript 语言服务插件，通过实现从 RTK Query hook 到 endpoint 定义的"跳转到定义"功能，以及智能悬停提示，增强 IDE 开发体验。
 
 <p align="center">
-  <img src="./view.gif" alt="view">
+  <img src="./assets/view.gif" height="150" alt="view">
+  &nbsp;
+  <img src="./assets/hover.png" height="150" alt="hover">
 </p>
+
+## 功能特性
+
+- **跳转到定义**：从 RTK Query hook 直接跳转到对应的 endpoint 定义
+- **跨文件支持**：支持从其他文件导入的 hook（支持跨一层导入）
+- **重命名支持**：支持使用 `as` 别名导入的 hook（支持跨一层导入）
+- **悬停提示**：鼠标悬停时显示 JSDoc 注释和 endpoint 详情（URL、HTTP 方法）
 
 ## 问题
 
@@ -14,7 +23,7 @@
 
 ## 解决方案
 
-该插件拦截"跳转到定义"请求，识别 RTK Query hook 命名模式，直接导航到对应的 endpoint 定义。
+该插件拦截"跳转到定义"请求，识别 RTK Query hook 命名模式，直接导航到对应的 endpoint 定义。同时提供丰富的悬停信息，显示 endpoint 详情。
 
 ## 安装
 
@@ -56,12 +65,67 @@ npm install --save-dev rtk-to-endpoints
 
 ## 使用
 
+### 跳转到定义
+
 配置完成后，在任何 RTK Query hook 上使用"跳转到定义"（F12 / Cmd+点击）：
 
 ```typescript
 // 点击 useGetUserQuery 将跳转到 getUser endpoint 定义处
 const { data } = useGetUserQuery();
 ```
+
+### 跨文件导入
+
+插件支持从其他文件导入的 hook（最多跨一层导入）：
+
+```typescript
+// api.ts
+export const userApi = createApi({
+  endpoints: (builder) => ({
+    getUsers: builder.query({
+      query: () => '/users'
+    }),
+  })
+})
+export const { useGetUsersQuery } = userApi
+
+// component.ts
+import { useGetUsersQuery } from './api'
+//     ^ 这里可以跳转！
+```
+
+### 重命名导入
+
+使用 `as` 别名导入的 hook 也支持跳转：
+
+```typescript
+import { useGetUsersQuery as useUsers } from './api'
+//     ^ 这里也可以跳转！
+```
+
+### 悬停提示
+
+鼠标悬停在 RTK Query hook 上可查看：
+- endpoint 定义处的 JSDoc 注释
+- HTTP 方法和 URL
+
+```typescript
+export const userApi = createApi({
+  endpoints: (builder) => ({
+    /**
+     * 从 API 获取所有用户
+     */
+    getUsers: builder.query({
+      query: () => '/users'  // 或: () => ({ url: '/users', method: 'GET' })
+    }),
+  })
+})
+```
+
+悬停在 `useGetUsersQuery` 上将显示：
+- "从 API 获取所有用户"
+- Method: GET
+- URL: /users
 
 ### 解构场景下的多次跳转
 
@@ -84,7 +148,8 @@ export const { useGetUsersQuery } = userApi
 //    再次跳转即可到达 endpoint 定义
 ```
 
-支持的 hook 模式：
+## 支持的 Hook 模式
+
 - `use{Endpoint}Query`
 - `useLazy{Endpoint}Query`
 - `use{Endpoint}Mutation`

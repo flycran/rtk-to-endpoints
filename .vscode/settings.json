@@ -1,5 +1,5 @@
 {
-  "vitest.enable": true,
-  "vitest.commandLine": "bunx --bun vitest",
-  "vitest.disableWorkspaceWarning": true
+	"vitest.enable": true,
+	"vitest.commandLine": "bunx --bun vitest",
+	"vitest.disableWorkspaceWarning": true
 }
