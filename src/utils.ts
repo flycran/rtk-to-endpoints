@@ -238,29 +238,32 @@ export function getEndpointInfo(
 		return;
 	const bodyNode = queryValueNode.body;
 
-	// 返回字符串
-	if (ts.isStringLiteral(bodyNode)) {
-		return {
-			method: "GET",
-			url: bodyNode.text,
-		};
-	}
+	const getUrl = (urlNode: tslib.Node) => {
+		if (
+			ts.isStringLiteral(urlNode) ||
+			ts.isNoSubstitutionTemplateLiteral(urlNode)
+		) {
+			const text = urlNode.text;
+			return text.length > 128 ? `${text.slice(0, 128)}...` : text;
+		}
+		const text = urlNode.getText();
+		return text.length > 128 ? `${text.slice(0, 128)}...` : text;
+	};
 
 	// 返回对象
-	if (ts.isParenthesizedExpression(bodyNode)) {
+	if (
+		ts.isParenthesizedExpression(bodyNode) &&
+		ts.isObjectLiteralExpression(bodyNode.getChildAt(1))
+	) {
 		const bodyType = checker.getTypeAtLocation(bodyNode);
 		const urlSymbol = bodyType.getProperty("url");
+		if (!urlSymbol) return;
 		const methodSymbol = bodyType.getProperty("method");
-		const getUrl = () => {
-			if (!urlSymbol) return;
-			const urlNode = urlSymbol.declarations?.[0];
-			if (!urlNode) return;
-			if (!ts.isPropertyAssignment(urlNode)) return;
-			const nodeValue = urlNode.initializer;
-			if (ts.isStringLiteral(nodeValue)) return nodeValue.text;
-			if(ts.isNoSubstitutionTemplateLiteral(nodeValue)) return nodeValue.text;
-			return nodeValue.getText();
-		};
+		const urlNode = urlSymbol.declarations?.[0];
+		if (!urlNode) return;
+		if (!ts.isPropertyAssignment(urlNode)) return;
+		const urlValue = urlNode.initializer;
+		const url = getUrl(urlValue);
 		const getMethod = () => {
 			if (!methodSymbol) return;
 			const methodNode = methodSymbol.declarations?.[0];
@@ -270,10 +273,17 @@ export function getEndpointInfo(
 			if (!ts.isStringLiteral(nodeValue)) return;
 			return nodeValue.text;
 		};
-		const url = getUrl();
-		if (!url) return;
 		return {
 			method: getMethod()?.toUpperCase() || "GET",
+			url,
+		};
+	}
+
+	const url = getUrl(bodyNode);
+	// 返回字符串
+	if (url) {
+		return {
+			method: "GET",
 			url,
 		};
 	}

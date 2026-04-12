@@ -293,7 +293,7 @@ describe("Integration Tests - TypeScript Language Service", () => {
 			expect(endpointInfo!.method).toBe("POST");
 		});
 
-		it("should extract endpoint info for PUT method", () => {
+		it("should extract endpoint info for PUT method with dynamic URL", () => {
 			const jsdocFile = path.resolve(fixturesDir, "jsdoc-endpoint.ts");
 			const sf = testFiles.get(jsdocFile)!;
 			const content = sf.getFullText();
@@ -313,12 +313,13 @@ describe("Integration Tests - TypeScript Language Service", () => {
 				ts,
 			);
 
-			// 注意：当前实现无法解析包含变量的 URL（如 '/users/' + id）
-			// 只支持纯字符串 URL
-			expect(endpointInfo).toBeUndefined();
+			// 对象形式：始终返回 url 字段内容（字符串返回内容，其他返回代码文本）
+			expect(endpointInfo).toBeDefined();
+			expect(endpointInfo!.method).toBe("PUT");
+			expect(endpointInfo!.url).toBe("`/users/${id}`");
 		});
 
-		it("should extract endpoint info for DELETE method", () => {
+		it("should extract endpoint info for DELETE method with dynamic URL", () => {
 			const jsdocFile = path.resolve(fixturesDir, "jsdoc-endpoint.ts");
 			const sf = testFiles.get(jsdocFile)!;
 			const content = sf.getFullText();
@@ -338,12 +339,13 @@ describe("Integration Tests - TypeScript Language Service", () => {
 				ts,
 			);
 
-			// 注意：当前实现无法解析包含变量的 URL（如 '/users/' + id）
-			// 只支持纯字符串 URL
-			expect(endpointInfo).toBeUndefined();
+			// 对象形式：始终返回 url 字段内容（字符串返回内容，其他返回代码文本）
+			expect(endpointInfo).toBeDefined();
+			expect(endpointInfo!.method).toBe("DELETE");
+			expect(endpointInfo!.url).toBe("`/users/${id}`");
 		});
 
-		it("should return undefined for dynamic URL with variables", () => {
+		it("should return code text for direct template literal with variables", () => {
 			const jsdocFile = path.resolve(fixturesDir, "jsdoc-endpoint.ts");
 			const sf = testFiles.get(jsdocFile)!;
 			const content = sf.getFullText();
@@ -363,8 +365,33 @@ describe("Integration Tests - TypeScript Language Service", () => {
 				ts,
 			);
 
-			// 动态 URL（包含变量）返回 undefined
-			expect(endpointInfo).toBeUndefined();
+			// 直接返回带变量的模板字符串：返回整个代码文本
+			expect(endpointInfo).toBeDefined();
+			expect(endpointInfo!.method).toBe("GET");
+			expect(endpointInfo!.url).toBe("`/users/${id}`");
+		});
+
+		it("should truncate url longer than 128 characters", () => {
+			const jsdocFile = path.resolve(fixturesDir, "jsdoc-endpoint.ts");
+			const sf = testFiles.get(jsdocFile)!;
+			const content = sf.getFullText();
+			const hookIndex = content.indexOf("useGetUsersQuery");
+
+			const node = getIdentifierNodeAt(sf, hookIndex);
+			const apiNode = findApi(node!, ts);
+			const endpointSymbol = findEndpoint(apiNode!, "getUsers", checker);
+
+			const endpointInfo = getEndpointInfo.call(
+				{ getProgram: () => program } as ts.LanguageService,
+				jsdocFile,
+				endpointSymbol!,
+				ts,
+			);
+
+			// 正常长度的 URL 不应被截断
+			expect(endpointInfo).toBeDefined();
+			expect(endpointInfo!.url).toBe("/users");
+			expect(endpointInfo!.url!.endsWith("...")).toBe(false);
 		});
 	});
 
