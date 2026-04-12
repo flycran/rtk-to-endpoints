@@ -127,27 +127,6 @@ export const userApi = createApi({
 - Method: GET
 - URL: /users
 
-### 解构场景下的多次跳转
-
-本插件不递归解析赋值操作。如果 hook 名称是从其他地方赋值而来（例如通过解构），可能需要多次跳转：
-
-```typescript
-export const userApi = createApi({
-  endpoints: (builder) => ({
-    getUsers: builder.query<string, void>({
-      // <- 2. 第二次跳转到达此处（endpoint 定义）
-      query: () => ''
-    }),
-  })
-})
-
-export const { useGetUsersQuery } = userApi
-//               ^
-//               |
-// 1. 第一次跳转到达此处（解构位置）
-//    再次跳转即可到达 endpoint 定义
-```
-
 ## 支持的 Hook 模式
 
 - `use{Endpoint}Query`

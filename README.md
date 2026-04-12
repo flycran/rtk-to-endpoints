@@ -127,27 +127,6 @@ Hovering over `useGetUsersQuery` will display:
 - Method: GET
 - URL: /users
 
-### Multiple Jumps in Destructuring
-
-This plugin does not recursively resolve assignments. If the hook name is assigned from elsewhere (e.g., via destructuring), you may need to jump multiple times:
-
-```typescript
-export const userApi = createApi({
-  endpoints: (builder) => ({
-    getUsers: builder.query<string, void>({
-      // <- 2. Second jump lands here (endpoint definition)
-      query: () => ''
-    }),
-  })
-})
-
-export const { useGetUsersQuery } = userApi
-//               ^
-//               |
-// 1. First jump lands here (destructuring location)
-//    Then jump again to reach the endpoint definition
-```
-
 ## Supported Hook Patterns
 
 - `use{Endpoint}Query`
