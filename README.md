@@ -1,6 +1,6 @@
 # rtk-to-endpoints
 
-English | [简体中文](./README.zh-CN.md)
+English | [简体中文](./README.zh-CN.md) | [vscode extension](https://marketplace.visualstudio.com/items?itemName=flycran.rtk-to-endpoints-vscode)
 
 A TypeScript Language Service Plugin that enhances IDE experience for RTK Query by enabling "Go to Definition" from hooks directly to endpoint definitions, with intelligent hover information.
 
@@ -32,6 +32,8 @@ npm install --save-dev rtk-to-endpoints
 ```
 
 ## Configuration
+
+> [vscode extension](https://marketplace.visualstudio.com/items?itemName=flycran.rtk-to-endpoints-vscode) works out of the box, no configuration required
 
 ### 1. Add plugin to `tsconfig.json`
 
