@@ -1,6 +1,6 @@
-# rtk-to-endpoints
+<img width="26" height="27" alt="6F0F584C64880A4735412CED0B4DB030" src="https://github.com/user-attachments/assets/62b9e0d1-b73c-4a14-aacf-f22357d328fc" /># rtk-to-endpoints
 
-[English](./README.md) | 简体中文
+[English](./README.md) | 简体中文 | [vscode插件](https://marketplace.visualstudio.com/items?itemName=flycran.rtk-to-endpoints-vscode)
 
 一个 TypeScript 语言服务插件，通过实现从 RTK Query hook 到 endpoint 定义的"跳转到定义"功能，以及智能悬停提示，增强 IDE 开发体验。
 
@@ -33,6 +33,8 @@ npm install --save-dev rtk-to-endpoints
 
 ## 配置
 
+> [vscode插件](https://marketplace.visualstudio.com/items?itemName=flycran.rtk-to-endpoints-vscode)开箱即用，无需配置
+
 ### 1. 在 `tsconfig.json` 中添加插件
 
 ```json
@@ -62,6 +64,7 @@ npm install --save-dev rtk-to-endpoints
 3. 选择**使用工作区版本** (或 "Use Workspace Version")
 
 4. **重新加载 VSCode 窗口**（`Ctrl+Shift+P` / `Cmd+Shift+P` → **开发人员: 重新加载窗口** / "Developer: Reload Window"）使配置生效。
+
 
 ## 使用
 
